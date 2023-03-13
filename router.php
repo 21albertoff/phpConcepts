@@ -23,3 +23,5 @@ function abort($code = 404){
 }
   
 routeToController($uri, $routes);
+
+?>
