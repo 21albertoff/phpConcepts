@@ -1,14 +1,24 @@
 <?php
 
-// Connect to the MySQL database.
-$dsn = "mysql:host=localhost;port=3306;dbname=myapp;user=root;charset=utf8mb4";
+<?php
 
-// Tip: This should be wrapped in a try-catch. We'll learn how, soon.
-$pdo = new PDO($dsn);
+class Database
+{
+    public $connection;
 
-$statement = $pdo->prepare("select * from posts where id = 1");
-$statement->execute();
+    public function __construct()
+    {
+        $dsn = "mysql:host=localhost;port=3306;dbname=myapp;user=root;charset=utf8mb4";
 
-$post = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->connection = new PDO($dsn);
+    }
 
-echo "<li>" . $post['title'] . "</li>";
+    public function query($query)
+    {
+        $statement = $this->connection->prepare($query);
+
+        $statement->execute();
+
+        return $statement;
+    }
+}
